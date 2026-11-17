@@ -1,9 +1,5 @@
 $ g++ -O3 -march=native -fopenmp main.cpp -o atom $(pkg-config --cflags --libs sdl2 gl)
 $ ./atom
-one point every 26.5 pm   energy: -12.89 eV   (0.2 s)
-one point every 17.6 pm   energy: -13.26 eV   (0.6 s)
-one point every 13.2 pm   energy: -13.40 eV   (1.6 s)
-one point every 10.6 pm   energy: -13.47 eV   (5.3 s)
-one point every  8.8 pm   energy: -13.51 eV   (10.1 s)
-with no spacing at all: -13.60 eV
+state 1   energy: -12.89 eV
+state 2   energy: -12.89 eV
 window 1280x720, theme: chalk
