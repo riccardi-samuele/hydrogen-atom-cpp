@@ -88,10 +88,11 @@ struct Window {
         glEnd();
     }
 
-    void end() {
+    void end(long clock = -1) {  // clock: a second number above the frame counter
         glMatrixMode(GL_PROJECTION); glLoadIdentity(); glOrtho(0, w, 0, h, -1, 1);
         glMatrixMode(GL_MODELVIEW); glLoadIdentity();
         number(frame, 20, 20, 10);
+        if (clock >= 0) number(clock, 20, 60, 14);
         SDL_GL_SwapWindow(sdl);
         static Uint32 last = 0;  // never faster than 60 frames a second
         while (SDL_GetTicks() - last < 16) SDL_Delay(1);
