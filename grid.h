@@ -15,7 +15,7 @@ struct Grid {
     int n; double L, h;            // n points per side, from -L to +L
     std::vector<double> V;         // the pull of the nuclei at every point
     Grid(int n, double L) : n(n), L(L), h(2 * L / n), V(size_t(n) * n * n, 0) {}
-    double x(int i) const { return i * h - L; }
+    double x(int i) const { return (i + 0.5) * h - L; }  // half a step off, so no point sits on a nucleus
     size_t id(int i, int j, int k) const { return (size_t(i) * n + j) * n + k; }
 
     void add(const Atom& a) {
