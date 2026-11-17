@@ -27,6 +27,7 @@ struct Grid {
 
     // H psi: -1/2 (bending) + V psi, zero outside the box
     void H(const std::vector<double>& p, std::vector<double>& out) const {
+        #pragma omp parallel for  // all 8 cores
         for (int i = 0; i < n; i++) for (int j = 0; j < n; j++) for (int k = 0; k < n; k++) {
             size_t c = id(i, j, k);
             double s = -6 * p[c];
@@ -39,6 +40,7 @@ struct Grid {
 
     static double dot(const std::vector<double>& a, const std::vector<double>& b) {
         double s = 0;
+        #pragma omp parallel for reduction(+ : s)
         for (size_t c = 0; c < a.size(); c++) s += a[c] * b[c];
         return s;
     }
@@ -58,13 +60,13 @@ struct Grid {
         double dt = h * h / 4, E = 1e9;
         for (int step = 1; step <= 100000; step++) {
             H(p, Hp);
+            #pragma omp parallel for
             for (size_t c = 0; c < p.size(); c++) p[c] -= dt * Hp[c];
             normalize(p);
             if (step % 100 == 0) {
                 H(p, Hp);
                 double e = dot(p, Hp);
-                if (step % 1000 == 0) printf("  step %5d   energy %.3f eV\n", step, e * EV);
-                if (!(std::fabs(e - E) > 1e-7)) { printf("  stopped after %d steps\n", step); return e; }
+                if (!(std::fabs(e - E) > 1e-7)) return e;
                 E = e;
             }
         }

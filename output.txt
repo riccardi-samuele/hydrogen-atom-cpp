@@ -1,6 +1,8 @@
 $ g++ -O3 -march=native -fopenmp main.cpp -o atom $(pkg-config --cflags --libs sdl2 gl)
 $ ./atom
-grid: 32^3 points, one every 26 pm
-  stopped after 600 steps
-energy: -12.89 eV
+one point every 26.5 pm   energy: -12.89 eV   (0.2 s)
+one point every 17.6 pm   energy: -13.26 eV   (0.5 s)
+one point every 13.2 pm   energy: -13.40 eV   (2.5 s)
+one point every 10.6 pm   energy: -13.47 eV   (5.9 s)
+one point every  8.8 pm   energy: -13.51 eV   (10.2 s)
 window 1280x720, theme: chalk
