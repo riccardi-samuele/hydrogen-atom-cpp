@@ -3,17 +3,31 @@
 #include <GL/gl.h>
 #include <chrono>
 
-int main() {
-    Atom H;
-    Grid g(96, 24);  // 2500 pm wide
-    g.add(H);
+// all 14 states on one grid, relaxed and sorted
+std::vector<Answers> solve(int n, double L) {
     auto t0 = std::chrono::steady_clock::now();
+    Atom H;
+    Grid g(n, L);
+    g.add(H);
     std::vector<std::vector<double>> S;
     for (int s = 1; s <= 14; s++) S.push_back(g.noise(s));
     relax_all(g, S);
     std::vector<Answers> ans = sort_shapes(g, S);
-    printf("%.0f s\n", std::chrono::duration<double>(std::chrono::steady_clock::now() - t0).count());
-    for (size_t s = 0; s < S.size(); s++) printf("%-7s energy: %6.2f eV\n", ans[s].name.c_str(), ans[s].E * EV);
+    printf("one point every %.1f pm: %.0f s\n", g.h * 52.9177, std::chrono::duration<double>(std::chrono::steady_clock::now() - t0).count());
+    return ans;
+}
+
+int main() {
+    // The trick from the first atom: two grids, a straight line in spacing^2, followed down to zero.
+    double ha = 2 * 24.0 / 96, hb = 2 * 24.0 / 120;
+    std::vector<Answers> A = solve(96, 24), B = solve(120, 24), ans = B;
+    for (size_t s = 0; s < ans.size(); s++) {
+        size_t a = 0;  // the same shape on the coarse grid, found by its name (the order inside a shell can change)
+        while (a < A.size() && A[a].name != B[s].name) a++;
+        if (a == A.size()) { printf("the two grids disagree on %s\n", B[s].name.c_str()); return 1; }
+        ans[s].E = (B[s].E * ha * ha - A[a].E * hb * hb) / (ha * ha - hb * hb);
+        printf("%-7s %6.2f eV  %6.2f eV  -> no spacing: %6.2f eV\n", ans[s].name.c_str(), A[a].E * EV, B[s].E * EV, ans[s].E * EV);
+    }
 
     // The red line: the electron drops from shell 3 to shell 2 and the energy leaves as light.
     // The brightest drop is 3d -> 2p. Wavelength = 1239.84 eV nm / energy.

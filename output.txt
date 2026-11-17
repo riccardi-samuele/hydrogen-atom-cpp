@@ -4,20 +4,28 @@ $ ./atom
   step  2000   sum of energies -40.044 eV
   step  3000   sum of energies -40.111 eV
   step  4000   sum of energies -40.113 eV
-141 s
-1s      energy: -12.89 eV
-2s      energy:  -3.34 eV
-2pz     energy:  -3.43 eV
-2px     energy:  -3.43 eV
-2py     energy:  -3.43 eV
-3s      energy:  -1.48 eV
-3pz     energy:  -1.52 eV
-3px     energy:  -1.52 eV
-3py     energy:  -1.52 eV
-3dyz    energy:  -1.51 eV
-3dxy    energy:  -1.51 eV
-3dxz    energy:  -1.51 eV
-3dz2    energy:  -1.51 eV
-3dx2-y2 energy:  -1.51 eV
-3d -> 2p: 1.914 eV of light, 647.6 nm
+one point every 26.5 pm: 115 s
+  step  1000   sum of energies -36.874 eV
+  step  2000   sum of energies -39.248 eV
+  step  3000   sum of energies -39.875 eV
+  step  4000   sum of energies -40.229 eV
+  step  5000   sum of energies -40.309 eV
+  step  6000   sum of energies -40.320 eV
+  step  7000   sum of energies -40.321 eV
+one point every 21.2 pm: 410 s
+1s      -12.89 eV  -13.13 eV  -> no spacing: -13.54 eV
+2s       -3.34 eV   -3.36 eV  -> no spacing:  -3.40 eV
+2px      -3.43 eV   -3.42 eV  -> no spacing:  -3.40 eV
+2pz      -3.43 eV   -3.42 eV  -> no spacing:  -3.40 eV
+2py      -3.43 eV   -3.42 eV  -> no spacing:  -3.40 eV
+3s       -1.48 eV   -1.49 eV  -> no spacing:  -1.50 eV
+3px      -1.52 eV   -1.51 eV  -> no spacing:  -1.50 eV
+3py      -1.52 eV   -1.51 eV  -> no spacing:  -1.50 eV
+3pz      -1.52 eV   -1.51 eV  -> no spacing:  -1.50 eV
+3dxz     -1.51 eV   -1.51 eV  -> no spacing:  -1.51 eV
+3dxy     -1.51 eV   -1.51 eV  -> no spacing:  -1.51 eV
+3dyz     -1.51 eV   -1.51 eV  -> no spacing:  -1.51 eV
+3dz2     -1.51 eV   -1.51 eV  -> no spacing:  -1.51 eV
+3dx2-y2  -1.51 eV   -1.51 eV  -> no spacing:  -1.51 eV
+3d -> 2p: 1.892 eV of light, 655.5 nm
 window 1280x720, theme: chalk
