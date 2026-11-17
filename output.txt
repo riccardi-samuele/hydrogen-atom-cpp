@@ -1,3 +1,6 @@
 $ g++ -O3 -march=native -fopenmp main.cpp -o atom $(pkg-config --cflags --libs sdl2 gl)
 $ ./atom
+start: 53 pm from the proton
 window 1280x720, theme: chalk
+t = 0.00 fs   distance: 52.9 pm
+t = 0.36 fs   distance: 52.9 pm
