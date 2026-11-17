@@ -1,5 +1,22 @@
 $ g++ -O3 -march=native -fopenmp main.cpp -o atom $(pkg-config --cflags --libs sdl2 gl)
 $ ./atom
-state 1   energy: -12.89 eV
-state 2   energy: -12.89 eV
+  step  1000   sum of energies -38.865 eV
+  step  2000   sum of energies -40.044 eV
+  step  3000   sum of energies -40.111 eV
+  step  4000   sum of energies -40.113 eV
+128 s
+state  1   energy: -12.89 eV
+state  2   energy: -3.42 eV
+state  3   energy: -3.42 eV
+state  4   energy: -3.41 eV
+state  5   energy: -3.38 eV
+state  6   energy: -1.51 eV
+state  7   energy: -1.51 eV
+state  8   energy: -1.51 eV
+state  9   energy: -1.51 eV
+state 10   energy: -1.51 eV
+state 11   energy: -1.51 eV
+state 12   energy: -1.51 eV
+state 13   energy: -1.50 eV
+state 14   energy: -1.51 eV
 window 1280x720, theme: chalk

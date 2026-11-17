@@ -1,29 +1,34 @@
 #include "window.h"
 #include "grid.h"
 #include <GL/gl.h>
+#include <chrono>
 
 int main() {
     Atom H;
-    Grid g(80, 20);  // a bigger box, 2100 pm wide, for the next shapes
+    Grid g(96, 24);  // 2500 pm wide
     g.add(H);
+    auto t0 = std::chrono::steady_clock::now();
+    std::vector<std::vector<double>> S;
+    for (int s = 1; s <= 14; s++) S.push_back(g.noise(s));
+    std::vector<double> E = relax_all(g, S);
+    printf("%.0f s\n", std::chrono::duration<double>(std::chrono::steady_clock::now() - t0).count());
     std::vector<std::vector<float>> shapes;
-    for (int s = 1; s <= 2; s++) {  // the second answer starts from different noise
-        std::vector<double> psi = g.noise(s);
-        double E = g.relax(psi);
-        printf("state %d   energy: %.2f eV\n", s, E * EV);
-        shapes.push_back(cloud(g, psi, 60000));
+    for (size_t s = 0; s < S.size(); s++) {
+        printf("state %2zu   energy: %.2f eV\n", s + 1, E[s] * EV);
+        shapes.push_back(cloud(g, S[s], 40000));
     }
 
     Window win("hydrogen");
     win.spin = false; win.yaw = win.pitch = 0;
     while (win.open()) {
-        win.begin(40);
-        for (int s = 0; s < int(shapes.size()); s++) {
+        win.begin(150);
+        for (int s = 0; s < int(shapes.size()); s++) {  // rows of 1, 4 and 9
+            int row = s < 1 ? 0 : s < 5 ? 1 : 2, col = s < 1 ? s : s < 5 ? s - 1 : s - 5, cols = row == 0 ? 1 : row == 1 ? 4 : 9;
             glPushMatrix();
-            glTranslatef(-11 + 22 * s, 0, 0);
+            glTranslatef((col - (cols - 1) / 2.0f) * 38, 55 - row * 55, 0);
             glRotatef(20, 1, 0, 0);
             glRotatef(win.frame * 0.3f, 0, 1, 0);
-            win.points(shapes[s], 2, 0.25f);
+            win.points(shapes[s], 1.5f, 0.12f);
             glPopMatrix();
         }
         win.end();

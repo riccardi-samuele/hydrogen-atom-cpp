@@ -74,6 +74,41 @@ struct Grid {
     }
 };
 
+// Many states at once. Every 10 steps each state is made different from the ones before it
+// (Gram-Schmidt: take away the part that looks like an earlier state).
+void different(std::vector<std::vector<double>>& S) {
+    for (size_t a = 0; a < S.size(); a++) {
+        for (size_t b = 0; b < a; b++) {
+            double c = Grid::dot(S[a], S[b]);
+            #pragma omp parallel for
+            for (size_t i = 0; i < S[a].size(); i++) S[a][i] -= c * S[b][i];
+        }
+        Grid::normalize(S[a]);
+    }
+}
+
+std::vector<double> relax_all(const Grid& g, std::vector<std::vector<double>>& S) {
+    std::vector<double> Hp(S[0].size()), E(S.size());
+    double dt = g.h * g.h / 4, total = 1e9;
+    different(S);
+    for (int step = 1; step <= 100000; step++) {
+        for (auto& p : S) {
+            g.H(p, Hp);
+            #pragma omp parallel for
+            for (size_t c = 0; c < p.size(); c++) p[c] -= dt * Hp[c];
+        }
+        if (step % 10 == 0) different(S);
+        if (step % 100 == 0) {
+            double sum = 0;
+            for (size_t a = 0; a < S.size(); a++) { g.H(S[a], Hp); sum += E[a] = Grid::dot(S[a], Hp); }
+            if (step % 1000 == 0) printf("  step %5d   sum of energies %.3f eV\n", step, sum * EV);
+            if (!(std::fabs(sum - total) > 1e-6)) break;
+            total = sum;
+        }
+    }
+    return E;
+}
+
 // points where the electron is likely: each point of the grid gets dots in proportion to psi^2
 std::vector<float> cloud(const Grid& g, const std::vector<double>& p, int count) {
     std::vector<double> sum(p.size());
