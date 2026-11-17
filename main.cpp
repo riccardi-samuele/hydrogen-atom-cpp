@@ -1,5 +1,5 @@
 #include "window.h"
-#include "grid.h"
+#include "shapes.h"
 #include <GL/gl.h>
 #include <chrono>
 
@@ -10,11 +10,13 @@ int main() {
     auto t0 = std::chrono::steady_clock::now();
     std::vector<std::vector<double>> S;
     for (int s = 1; s <= 14; s++) S.push_back(g.noise(s));
-    std::vector<double> E = relax_all(g, S);
+    relax_all(g, S);
+    std::vector<Answers> ans = sort_shapes(g, S);
     printf("%.0f s\n", std::chrono::duration<double>(std::chrono::steady_clock::now() - t0).count());
     std::vector<std::vector<float>> shapes;
     for (size_t s = 0; s < S.size(); s++) {
-        printf("state %2zu   energy: %.2f eV\n", s + 1, E[s] * EV);
+        printf("%-7s energy: %6.2f eV   turn: %.2f   mirrors: %c%c%c\n", ans[s].name.c_str(), ans[s].E * EV, ans[s].L2,
+               ans[s].px ? '-' : '+', ans[s].py ? '-' : '+', ans[s].pz ? '-' : '+');
         shapes.push_back(cloud(g, S[s], 40000));
     }
 
