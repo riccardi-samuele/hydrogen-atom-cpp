@@ -87,6 +87,19 @@ struct Window {
         glDisableClientState(GL_VERTEX_ARRAY); glDisableClientState(GL_COLOR_ARRAY);
     }
 
+    // the color of light with this wavelength, as close as a screen can get (380 to 750 nm)
+    static void rainbow(double nm, float* c) {
+        double r = 0, g = 0, b = 0;
+        if (nm < 440) { r = (440 - nm) / 60; b = 1; }
+        else if (nm < 490) { g = (nm - 440) / 50; b = 1; }
+        else if (nm < 510) { g = 1; b = (510 - nm) / 20; }
+        else if (nm < 580) { r = (nm - 510) / 70; g = 1; }
+        else if (nm < 645) { r = 1; g = (645 - nm) / 65; }
+        else r = 1;
+        double edge = nm < 420 ? 0.3 + 0.7 * (nm - 380) / 40 : nm > 700 ? 0.3 + 0.7 * (750 - nm) / 50 : 1;
+        c[0] = float(r * edge); c[1] = float(g * edge); c[2] = float(b * edge);
+    }
+
     // a number drawn with seven lines per digit, like a microwave clock
     void number(long v, float x, float y, float s) {
         static const unsigned char seg[10] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f};

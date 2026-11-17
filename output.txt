@@ -4,19 +4,20 @@ $ ./atom
   step  2000   sum of energies -40.044 eV
   step  3000   sum of energies -40.111 eV
   step  4000   sum of energies -40.113 eV
-119 s
-1s      energy: -12.89 eV   turn: 0.00   mirrors: +++
-2s      energy:  -3.34 eV   turn: 0.00   mirrors: +++
-2px     energy:  -3.43 eV   turn: 1.97   mirrors: -++
-2pz     energy:  -3.43 eV   turn: 1.97   mirrors: ++-
-2py     energy:  -3.43 eV   turn: 1.97   mirrors: +-+
-3s      energy:  -1.48 eV   turn: 0.06   mirrors: +++
-3pz     energy:  -1.52 eV   turn: 2.02   mirrors: ++-
-3px     energy:  -1.52 eV   turn: 2.02   mirrors: -++
-3py     energy:  -1.52 eV   turn: 2.02   mirrors: +-+
-3dyz    energy:  -1.51 eV   turn: 5.98   mirrors: +--
-3dxy    energy:  -1.51 eV   turn: 5.98   mirrors: --+
-3dxz    energy:  -1.51 eV   turn: 5.98   mirrors: -+-
-3dz2    energy:  -1.51 eV   turn: 5.97   mirrors: +++
-3dx2-y2 energy:  -1.51 eV   turn: 5.97   mirrors: +++
+141 s
+1s      energy: -12.89 eV
+2s      energy:  -3.34 eV
+2pz     energy:  -3.43 eV
+2px     energy:  -3.43 eV
+2py     energy:  -3.43 eV
+3s      energy:  -1.48 eV
+3pz     energy:  -1.52 eV
+3px     energy:  -1.52 eV
+3py     energy:  -1.52 eV
+3dyz    energy:  -1.51 eV
+3dxy    energy:  -1.51 eV
+3dxz    energy:  -1.51 eV
+3dz2    energy:  -1.51 eV
+3dx2-y2 energy:  -1.51 eV
+3d -> 2p: 1.914 eV of light, 647.6 nm
 window 1280x720, theme: chalk
