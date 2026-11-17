@@ -70,6 +70,23 @@ struct Window {
         glBegin(GL_POINTS); glColor4f(c[0], c[1], c[2], alpha); glVertex3f(x, y, z); glEnd();
     }
 
+    // a cloud: x, y, z, sign for every point; the sign picks the color
+    void points(const std::vector<float>& p, float px, float alpha) {
+        static std::vector<float> rgba;
+        rgba.resize(p.size());
+        for (size_t i = 0; i < p.size(); i += 4) {
+            const float* c = p[i + 3] > 0 ? t().a : t().b;
+            rgba[i] = c[0]; rgba[i + 1] = c[1]; rgba[i + 2] = c[2]; rgba[i + 3] = alpha;
+        }
+        glPointSize(px);
+        glDisable(GL_POINT_SMOOTH);
+        glEnableClientState(GL_VERTEX_ARRAY); glEnableClientState(GL_COLOR_ARRAY);
+        glVertexPointer(3, GL_FLOAT, 4 * sizeof(float), p.data());
+        glColorPointer(4, GL_FLOAT, 0, rgba.data());
+        glDrawArrays(GL_POINTS, 0, GLsizei(p.size() / 4));
+        glDisableClientState(GL_VERTEX_ARRAY); glDisableClientState(GL_COLOR_ARRAY);
+    }
+
     // a number drawn with seven lines per digit, like a microwave clock
     void number(long v, float x, float y, float s) {
         static const unsigned char seg[10] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f};

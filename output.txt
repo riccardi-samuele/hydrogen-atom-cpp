@@ -1,5 +1,6 @@
 $ g++ -O3 -march=native -fopenmp main.cpp -o atom $(pkg-config --cflags --libs sdl2 gl)
 $ ./atom
-start: 53 pm from the proton
-fell into the proton after 15.6 ps and 204586 turns
+grid: 32^3 points, one every 26 pm
+  stopped after 100 steps
+energy: -nan eV
 window 1280x720, theme: chalk
